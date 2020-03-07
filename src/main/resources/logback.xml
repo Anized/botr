@@ -1,0 +1,14 @@
+<configuration>
+    <appender name="STDOUT" target="System.out" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder><pattern><![CDATA[
+                        %d{HH:mm:ss.SSS} | %5.5level | %6.6thread | %X{akkaSource} | %msg %n
+                ]]></pattern></encoder>
+    </appender>
+
+    <logger name="org.anized" level="DEBUG" />
+
+    <root level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>

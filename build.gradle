@@ -1,0 +1,31 @@
+apply plugin: 'java'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+ext {
+    camelVersion = "3.1.0"
+}
+
+dependencies {
+    implementation "org.apache.camel:camel-core:${camelVersion}"
+    implementation "org.apache.camel:camel-main:${camelVersion}"
+    implementation "org.apache.camel:camel-http:${camelVersion}"
+    implementation "org.apache.camel:camel-jackson:${camelVersion}"
+    implementation "ch.qos.logback:logback-classic:1.2.3"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testImplementation "org.apache.camel:camel-test-junit5:${camelVersion}"
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+}
+
+test {
+    useJUnitPlatform()
+}
