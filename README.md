@@ -45,8 +45,8 @@ Message Exchange Pattern
 
 There are three MEPs available: `InOut`, `InOnly` and `InOptionalOut`
 
-*  The out message of each stage becomes the in message for the following stage
-*  If there is no out message, then the in message is used
-*  For `InOut`, the out from the last stage in the route is returned to the producer.
-*  For `InOnly`, the last out is thrown away
+*  The *out* message from one stage becomes the *in* message for the following stage
+*  If there is no *out* message, then the *in* message is used
+*  For `InOut`, the *out* from the last stage in the route is returned to the producer
+*  For `InOnly`, the last *out* is discarded
 
