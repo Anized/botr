@@ -16,7 +16,7 @@ where some operation might be performed on it, and finally output to the 'to' bo
 
 ```java
   from("direct:start")
-    .process(this::operate)
+    .process(this::operation)
     .to("direct:next")
 ```
 
@@ -28,18 +28,18 @@ Typically, an operation within a stage will access the input data, use or modify
  
 ```
   +--------------------------------------------+
-  |                   Exchange                 |    Exchange[Id: ID-LP-CCS-54505441-1573671324375-0-2, 
-  | +----------------------------------------+ |    ExchangePattern: InOut
+  |                   Exchange                 |  Exchange[Id: ID-LP-CCS-54505441-1573671324375-0-2, 
+  | +----------------------------------------+ |    ExchangePattern: InOut,
   | | Properties, MEP, Exception, ExchangeId | |    Properties: {CamelCharsetName=utf-8, 
   | +----------------------------------------+ |      CamelToEndpoint=http://worldclockapi.com/api/json/cet/now}
-  |        Input                 Output        |   
+  |        Input                 Output        |      
   | +------------------+   +-----------------+ |    Headers: {CamelHttpMethod=GET, CamelHttpResponseCode=200, 
   | |     Headers      |   |     Headers     | |      CamelHttpResponseText=OK, Content-Length=261, 
   | +------------------+   +-----------------+ |      Content-Type=application/json; charset=utf-8,
   | +------------------+   +-----------------+ |      Date=Sun, 08 Mar 2020 12:42:03 GMT, Expires=-1}
   | |       Body       |   |       Body      | |    BodyType: org.anized.jafool.DateTimeReport,
-  | +------------------+   +-----------------+ |    Body: org.anized.jafool.DateTimeReport@5b8dfcc1]
-  +--------------------------------------------+
+  | +------------------+   +-----------------+ |    Body: org.anized.jafool.DateTimeReport@5b8dfcc1
+  +--------------------------------------------+  ]
 ```
 ### MEP
 Message Exchange Pattern
@@ -51,3 +51,17 @@ There are three MEPs available: `InOut`, `InOnly` and `InOptionalOut`
 *  For `InOut`, the *out* from the last stage in the route is returned to the producer
 *  For `InOnly`, the last *out* is discarded
 
+## Components
+Apache Camel routes are built-up from a library of components: pre-built integrations with commonly used platforms
+and frameworks.  Components are invoked by being named in the *scheme* potion of the `uri` in a `to` stage, for example.
+This example utilises the `http` component - note, that although the endpoint used looks like a regular URL:
+
+    .toD("http://worldclockapi.com/api/json/${body}/now")
+
+The scheme `http` is being used to instruct Camel to pass this URI to the `http` component (where the scheme is then
+also used in the web-service call).  This is not always the case, as often the scheme portion is only used to identify
+the component, and discarded once that component is invoked to the process the request.
+
+Camel has a catalog of over 200 components, including message queues, database access, spark, Azure storage queues, to
+name but a few.  It is relatively easy to build custom components to support commonly needed integrations in an
+enterprise, as well.
