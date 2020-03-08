@@ -25,19 +25,20 @@ For each invocation of a route, an exchange is created, and passed from stage to
 being processed, along with house-keeping items such as headers, properties and meta-data.
 
 Typically, an operation within a stage will access the input data, use or modify it, and set as the output data.
+ 
 ```
   +--------------------------------------------+
-  |                   Exchange                 |
-  | +----------------------------------------+ |
-  | | Properties, MEP, Exception, ExchangeId | |
-  | +----------------------------------------+ |
-  |        Input                 Output        |
-  | +------------------+   +-----------------+ |
-  | |     Headers      |   |     Headers     | |  
-  | +------------------+   +-----------------+ |  
-  | +------------------+   +-----------------+ |
-  | |       Body       |   |       Body      | |  
-  | +------------------+   +-----------------+ |  
+  |                   Exchange                 |    Exchange[Id: ID-LP-CCS-54505441-1573671324375-0-2, 
+  | +----------------------------------------+ |    ExchangePattern: InOut
+  | | Properties, MEP, Exception, ExchangeId | |    Properties: {CamelCharsetName=utf-8, 
+  | +----------------------------------------+ |      CamelToEndpoint=http://worldclockapi.com/api/json/cet/now}
+  |        Input                 Output        |   
+  | +------------------+   +-----------------+ |    Headers: {CamelHttpMethod=GET, CamelHttpResponseCode=200, 
+  | |     Headers      |   |     Headers     | |      CamelHttpResponseText=OK, Content-Length=261, 
+  | +------------------+   +-----------------+ |      Content-Type=application/json; charset=utf-8,
+  | +------------------+   +-----------------+ |      Date=Sun, 08 Mar 2020 12:42:03 GMT, Expires=-1}
+  | |       Body       |   |       Body      | |    BodyType: org.anized.jafool.DateTimeReport,
+  | +------------------+   +-----------------+ |    Body: org.anized.jafool.DateTimeReport@5b8dfcc1]
   +--------------------------------------------+
 ```
 ### MEP
