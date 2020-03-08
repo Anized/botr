@@ -1,6 +1,15 @@
 # Apache Camel Introduction
 A small exposition of the uses, terminology and practice of the Apache Camel framework
 
+## Overview
+Apache Camel is an integration framework implementing a number of useful Enterprise Integration Patterns (EIPs).
+It also provides a large set of pre-built components allowing these patterns to be readily applied to popular
+services and infrastructures, along with the appropriate data format translators.
+
+Integrations are defined in code as *Routes*, using either a declarative text (XML) format, or with a DSL in a
+programming language. The Java Camel DSL is a fluent-builder style DSL that provides a simple and clear language for
+defining routes.
+
 ## Routes
 A Camel route is a blueprint for a process execution, consisting of a number of stages linked together, 
 much like a pipeline in the `bash` shell, where the output of one operation becomes the input of the 
@@ -14,7 +23,7 @@ where some operation might be performed on it, and finally output to the 'to' bo
   +------+    +---------+    +------+
 ```
 
-```java
+```
   from("direct:start")
     .process(this::operation)
     .to("direct:next")
@@ -65,3 +74,9 @@ the component, and discarded once that component is invoked to the process the r
 Camel has a catalog of over 200 components, including message queues, database access, spark, Azure storage queues, to
 name but a few.  It is relatively easy to build custom components to support commonly needed integrations in an
 enterprise, as well.
+
+## Non-Functionals
+A big advantage of the Apache Camel framework is support for many critical non-functional requirements, including
+connection retries, declarative error handling, logging, circuit-breakers, parallelism, transactions, health checks
+and metrics.  The simple format of Camel routes makes it easy to add in support for these concerns after an initial
+POC has been built, without requiring a large amount of redesign or coding.

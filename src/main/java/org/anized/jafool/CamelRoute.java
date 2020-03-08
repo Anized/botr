@@ -19,15 +19,15 @@ public class CamelRoute extends RouteBuilder {
         from("direct:worldclock")
                 .setHeader(Exchange.HTTP_METHOD).constant(GET)
                 .toD("http://worldclockapi.com/api/json/${body}/now")
-                .unmarshal(format)
+                .unmarshal(jsonFormat)
                 .to("log:org.anized?level=DEBUG&showAll=true")
                 .convertBodyTo(ZonedDateTime.class);
     }
 
-    private static final JacksonDataFormat format = new JacksonDataFormat();
+    private static final JacksonDataFormat jsonFormat = new JacksonDataFormat();
     static {
-        format.disableFeature(FAIL_ON_UNKNOWN_PROPERTIES);
-        format.setUnmarshalType(DateTimeReport.class);
+        jsonFormat.disableFeature(FAIL_ON_UNKNOWN_PROPERTIES);
+        jsonFormat.setUnmarshalType(DateTimeReport.class);
     }
 
     public static class EventTypeConverters implements TypeConverters {

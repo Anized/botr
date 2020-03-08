@@ -17,7 +17,8 @@ public class CamelApp {
         final CompletableFuture<Void> camel = CompletableFuture.runAsync(() -> {
             try {
                 route.run();
-            } catch (final Throwable ignored) {
+            } catch (final Throwable t) {
+                logger.error("Failed to start Camel route: "+t.getMessage(), t);
             }
         });
         Thread.sleep(2000);
