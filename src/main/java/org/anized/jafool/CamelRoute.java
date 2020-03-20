@@ -12,6 +12,7 @@ import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKN
 import static org.apache.camel.http.common.HttpMethods.GET;
 
 public class CamelRoute extends RouteBuilder {
+    private static final JacksonDataFormat jsonFormat = new JacksonDataFormat();
     private String worldClockUrl;
     public CamelRoute(final String worldClockUrl) {
         this.worldClockUrl = worldClockUrl;
@@ -32,7 +33,6 @@ public class CamelRoute extends RouteBuilder {
                 .convertBodyTo(ZonedDateTime.class);
     }
 
-    private static final JacksonDataFormat jsonFormat = new JacksonDataFormat();
     static {
         jsonFormat.disableFeature(FAIL_ON_UNKNOWN_PROPERTIES);
         jsonFormat.setUnmarshalType(DateTimeReport.class);
