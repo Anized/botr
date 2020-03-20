@@ -5,9 +5,9 @@
                 ]]></pattern></encoder>
     </appender>
 
-    <logger name="org.anized" level="DEBUG" />
+    <logger level="DEBUG" />
 
-    <root level="WARN">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </root>
 

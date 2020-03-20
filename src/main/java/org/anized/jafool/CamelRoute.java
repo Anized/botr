@@ -1,24 +1,32 @@
 package org.anized.jafool;
 
-import java.time.ZonedDateTime;
 import org.apache.camel.Converter;
 import org.apache.camel.Exchange;
 import org.apache.camel.TypeConverters;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jackson.JacksonDataFormat;
-import static org.apache.camel.http.common.HttpMethods.GET;
+
+import java.time.ZonedDateTime;
+
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
+import static org.apache.camel.http.common.HttpMethods.GET;
 
 public class CamelRoute extends RouteBuilder {
+    private String worldClockUrl;
+    public CamelRoute(final String worldClockUrl) {
+        this.worldClockUrl = worldClockUrl;
+    }
 
     @Override
     public void configure() {
         getContext().getTypeConverterRegistry()
                 .addTypeConverters(new EventTypeConverters());
 
-        from("direct:worldclock")
+        from("direct:worldclock").routeId("clock")
                 .setHeader(Exchange.HTTP_METHOD).constant(GET)
-                .toD("http://worldclockapi.com/api/json/${body}/now")
+                .to("log:org.anized?level=DEBUG&showAll=true")
+                .toD(worldClockUrl)
+                .to("log:org.anized?level=DEBUG&showAll=true")
                 .unmarshal(jsonFormat)
                 .to("log:org.anized?level=DEBUG&showAll=true")
                 .convertBodyTo(ZonedDateTime.class);

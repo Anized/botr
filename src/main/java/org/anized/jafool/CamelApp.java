@@ -1,5 +1,6 @@
 package org.anized.jafool;
 
+import io.vavr.control.Try;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.main.Main;
 import org.slf4j.Logger;
@@ -13,14 +14,14 @@ public class CamelApp {
     public static void main(final String[] args) throws Exception {
         logger.info("\uD83D\uDC2B Starting Camel journey...");
         final Main route = new Main();
-        route.addRoutesBuilder(new CamelRoute());
-        final CompletableFuture<Void> camel = CompletableFuture.runAsync(() -> {
-            try {
-                route.run();
-            } catch (final Throwable t) {
-                logger.error("Failed to start Camel route: "+t.getMessage(), t);
-            }
-        });
+        route.addRoutesBuilder(new CamelRoute("http://worldclockapi.com/api/json/${body}/now"));
+
+        final CompletableFuture<Void> camel =
+                CompletableFuture.runAsync(() -> Try.of(() -> {
+                    route.run();
+                    return null;
+                }));
+
         Thread.sleep(2000);
         final ProducerTemplate producer = route.getCamelContext().createProducerTemplate();
         producer.start();

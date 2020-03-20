@@ -19,6 +19,7 @@ dependencies {
     implementation "org.apache.camel:camel-main:${camelVersion}"
     implementation "org.apache.camel:camel-http:${camelVersion}"
     implementation "org.apache.camel:camel-jackson:${camelVersion}"
+    implementation "io.vavr:vavr:0.10.2"
     implementation "ch.qos.logback:logback-classic:1.2.3"
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
