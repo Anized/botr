@@ -1,6 +1,8 @@
 # Apache Camel Introduction
 A small exposition of the uses, terminology and practice of the Apache Camel framework
 
+[![Build Status](https://travis-ci.org/sothach/jafool.svg?branch=master)](https://travis-ci.org/sothach/jafool)
+
 ## Overview
 Apache Camel is an integration framework implementing a number of useful Enterprise Integration Patterns (EIPs).
 It also provides a large set of pre-built components allowing these patterns to be readily applied to popular
