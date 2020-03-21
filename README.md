@@ -19,7 +19,7 @@ A Camel route is a blueprint for a process execution, consisting of a number of 
 much like a pipeline in the `bash` shell, where the output of one operation becomes the input of the 
 next operation in the pipeline.
 
-A simple example can be depicted as below, where data sent to the 'from' box is transmitted to the 'process' box,
+A simple example is illustrated below, where data sent to the 'from' box is transmitted to the 'process' box,
 where some operation might be performed on it, and finally output to the 'to' box.
 ```text
   +------+    +---------+    +------+
