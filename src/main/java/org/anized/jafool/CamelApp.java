@@ -13,16 +13,11 @@ public class CamelApp {
 
     public static void main(final String[] args) throws Exception {
         logger.info("\uD83D\uDC2B Starting Camel journey...");
+
         final Main route = new Main();
-        route.addRoutesBuilder(new CamelRoute("http://worldclockapi.com/api/json/${body}/now"));
+        route.addRoutesBuilder(new CamelRoute(System.getProperty("worldclock.url")));
 
-        final CompletableFuture<Void> camel =
-                CompletableFuture.runAsync(() -> Try.of(() -> {
-                    route.run();
-                    return null;
-                }));
-
-        Thread.sleep(2000);
+        final CompletableFuture<Void> camel = startCamel(route);
         final ProducerTemplate producer = route.getCamelContext().createProducerTemplate();
         producer.start();
 
@@ -31,5 +26,16 @@ public class CamelApp {
         logger.info("Route produced: " + result);
         camel.cancel(true);
     }
+
+    private static CompletableFuture<Void> startCamel(final Main route) throws InterruptedException {
+        final CompletableFuture<Void> camel =
+                CompletableFuture.runAsync(() -> Try.of(() -> {
+                    route.run();
+                    return null;
+                }));
+        Thread.sleep(2000);
+        return camel;
+    }
+
 
 }
