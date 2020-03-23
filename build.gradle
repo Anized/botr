@@ -21,6 +21,7 @@ dependencies {
     implementation "org.apache.camel:camel-main:${camelVersion}"
     implementation "org.apache.camel:camel-http:${camelVersion}"
     implementation "org.apache.camel:camel-jackson:${camelVersion}"
+    implementation "com.google.guava:guava:28.2-jre"
     implementation "io.vavr:vavr:0.10.2"
     implementation "ch.qos.logback:logback-classic:1.2.3"
 

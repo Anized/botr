@@ -15,7 +15,7 @@ public class CamelApp {
         logger.info("\uD83D\uDC2B Starting Camel journey...");
 
         final Main route = new Main();
-        route.addRoutesBuilder(new CamelRoute(System.getProperty("worldclock.url")));
+        route.addRoutesBuilder(new CamelRoute(args[0]));
 
         final CompletableFuture<Void> camel = startCamel(route);
         final ProducerTemplate producer = route.getCamelContext().createProducerTemplate();

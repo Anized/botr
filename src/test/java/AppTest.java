@@ -8,15 +8,13 @@ public class AppTest {
     @Test
     @DisplayName("App should start, run and exit")
     public void runningApp() throws Exception {
-        System.setProperty("worldclock.url","http://worldclockapi.com/api/json/${body}/now");
-        CamelApp.main(new String[0]);
+        CamelApp.main(new String[]{"http://worldclockapi.com/api/json/${body}/now"});
     }
 
     @Test
-    @DisplayName("App will fail if worldclock url is not set")
+    @DisplayName("App will fail if worldclock url is not provided")
     public void failingApp() {
-        System.clearProperty("worldclock.url");
         Assertions.assertThrows(Exception.class,
-                () -> CamelApp.main(new String[0]));
+                () -> CamelApp.main(new String[]{null}));
     }
 }

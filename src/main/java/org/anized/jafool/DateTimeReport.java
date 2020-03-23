@@ -7,4 +7,5 @@ public class DateTimeReport {
     public String dayOfTheWeek;
     public String timeZoneName;
     public String ordinalDate;
+    public String serviceResponse;
 }
