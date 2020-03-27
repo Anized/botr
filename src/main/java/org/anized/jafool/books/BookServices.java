@@ -15,6 +15,20 @@ import java.util.Random;
 
 public class BookServices {
     private static final Logger logger = LoggerFactory.getLogger(BookServices.class);
+    private static ISBN13 key1 = new ISBN13("ISBN-13:9780316217644");
+    private static Map<String,ISBN13> bookCatalog = ImmutableMap.<String, ISBN13>builder()
+            .put("Babylon's Ashes", key1)
+            .build();
+    private static Map<ISBN13, BigDecimal> priceList = ImmutableMap.<ISBN13,BigDecimal>builder()
+            .put(key1, BigDecimal.valueOf(371,2))
+            .build();
+    private static Map<ISBN13, String> authorCatalog = ImmutableMap.<ISBN13,String>builder()
+            .put(key1, "S.A. Corey")
+            .build();
+    private static Map<ISBN13, LocalDate> publicationDates = ImmutableMap.<ISBN13,LocalDate>builder()
+            .put(key1, LocalDate.parse("2016-12-01"))
+            .build();
+
 
     public static ISBN13 isbnLookup(final String title) {
         return bookCatalog.get(title);
@@ -40,22 +54,6 @@ public class BookServices {
         props.put("author", authorCatalog.get(isbn));
         pause("authorLookup");
     }
-
-    private static ISBN13 key1 = new ISBN13("ISBN-13:9780316217644");
-
-    private static Map<String,ISBN13> bookCatalog = ImmutableMap.<String, ISBN13>builder()
-            .put("Babylon's Ashes", key1)
-            .build();
-    private static Map<ISBN13, BigDecimal> priceList = ImmutableMap.<ISBN13,BigDecimal>builder()
-            .put(key1, BigDecimal.valueOf(371,2))
-            .build();
-    private static Map<ISBN13, String> authorCatalog = ImmutableMap.<ISBN13,String>builder()
-            .put(key1, "S.A. Corey")
-            .build();
-    private static Map<ISBN13, LocalDate> publicationDates = ImmutableMap.<ISBN13,LocalDate>builder()
-            .put(key1, LocalDate.parse("2016-12-01"))
-            .build();
-
 
     private static final Random r = new Random();
     private static void pause(final String tag) {

@@ -1,6 +1,7 @@
 package org.anized.jafool;
 
-import org.anized.jafool.books.*;
+import org.anized.jafool.books.BookServices;
+import org.anized.jafool.books.MergeHub;
 import org.anized.jafool.books.model.BookRecord;
 import org.anized.jafool.books.model.ISBN13;
 import org.apache.camel.Converter;

@@ -1,7 +1,5 @@
 package org.anized.jafool.books.model;
 
-import com.google.common.base.Objects;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
