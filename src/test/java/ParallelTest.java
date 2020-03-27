@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ParallelTest extends CamelTestSupport {
 
@@ -19,7 +18,8 @@ public class ParallelTest extends CamelTestSupport {
     @DisplayName("Request should be processed in parallel and an aggregated result returned")
     public void testBookLookupProcess() {
         final BookRecord result = template.requestBody("direct:parallel", "Babylon's Ashes", BookRecord.class);
-        assertEquals(new ISBN13("ISBN-13:9-780-316-217-644"), result.getIsbnCode());
+        assertTrue(result.toString().length() > 0);
+        assertEquals("ISBN-13:9780316217644", result.getIsbnCode().toString());
         assertEquals("S.A. Corey", result.getAuthor());
         assertEquals(BigDecimal.valueOf(3.71), result.getPrice());
         assertEquals("Babylon's Ashes", result.getTitle());

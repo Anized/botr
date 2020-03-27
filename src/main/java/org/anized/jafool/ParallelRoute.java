@@ -66,11 +66,6 @@ public class ParallelRoute extends RouteBuilder {
 
         @Converter
         public BookRecord buildBook(final Map<String, Object> properties) {
-            assert properties.containsKey("isbn");
-            assert properties.containsKey("author");
-            assert properties.containsKey("published");
-            assert properties.containsKey("price");
-            assert properties.containsKey("title");
             final ISBN13 bookCode = (ISBN13) properties.get("isbn");
             final String author = (String) properties.get("author");
             final LocalDate published = (LocalDate) properties.get("published");
