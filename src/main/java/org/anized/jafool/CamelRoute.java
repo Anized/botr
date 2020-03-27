@@ -54,6 +54,7 @@ public class CamelRoute extends RouteBuilder {
                 .unmarshal(jsonFormat)                          // parse the Json response returned into domain object
                 .to("log:org.anized?level=DEBUG&showAll=true")
                 .convertBodyTo(ZonedDateTime.class);            // transform response to required return type
+
     }
 
     public static class EventTypeConverters implements TypeConverters {
