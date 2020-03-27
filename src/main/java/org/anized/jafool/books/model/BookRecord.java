@@ -13,11 +13,6 @@ public class BookRecord {
     private final BigDecimal price;
 
     public BookRecord(final ISBN13 bookCode, final String author, final LocalDate published, final String title, final BigDecimal price) {
-        assert bookCode != null : "isbnCode must not be null";
-        assert author != null && !author.trim().isEmpty() : "author must not be empty";
-        assert title != null && !title.trim().isEmpty() : "title must not be empty";
-        assert published != null : "published must not be null";
-        assert price != null : "price must not be null";
         this.isbnCode = bookCode;
         this.published = published;
         this.author = author;
