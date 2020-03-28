@@ -5,17 +5,16 @@ import org.anized.jafool.books.MergeHub;
 import org.anized.jafool.books.model.BookRecord;
 import org.anized.jafool.books.model.ISBN13;
 import org.apache.camel.Converter;
-import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.ThreadPoolBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
 public class ParallelRoute extends RouteBuilder {
+    private final BookServices bookServices = new BookServices();
 
     @Override
     public void configure() throws Exception {
@@ -28,45 +27,32 @@ public class ParallelRoute extends RouteBuilder {
         getContext().getTypeConverterRegistry()
                 .addTypeConverters(new TypeConverters());
 
-        from("direct:parallel")
-                .convertBodyTo(ISBN13.class)
+        from("direct:book-search")
+                .process(bookServices::isbnLookup)
                 .multicast()
                 .parallelProcessing(true)
                 .executorService(ec)
                 .aggregationStrategy(new MergeHub())
-                    .to("direct:published-query")
-                    .to("direct:price-query")
-                    .to("direct:author-query")
+                    .to("seda:published-query")
+                    .to("seda:price-query")
+                    .to("seda:author-query")
                 .end()
                 .convertBodyTo(BookRecord.class);
 
-        from("direct:published-query").routeId("published-lookup")
-                .process(BookServices::publishedLookup);
+        from("seda:published-query").routeId("published-lookup")
+                .process(bookServices::publishedLookup);
 
-        from("direct:price-query").routeId("price-lookup")
-                .process(BookServices::authorLookup);
+        from("seda:price-query").routeId("price-lookup")
+                .process(bookServices::authorLookup);
 
-        from("direct:author-query").routeId("author-lookup")
-                .process(BookServices::priceLookup);
+        from("seda:author-query").routeId("author-lookup")
+                .process(bookServices::priceLookup);
     }
 
 
     public static class TypeConverters implements org.apache.camel.TypeConverters {
         @Converter
-        public ISBN13 lookupIsbn(final String title, final Exchange exchange) {
-            final ISBN13 isbn = BookServices.isbnLookup(title);
-            if(isbn == null) {
-                throw new IllegalStateException("failed to lookup ISBN code for title '"+title+"'");
-            }
-            final Properties bookProps = new Properties();
-            bookProps.put("isbn", isbn);
-            bookProps.put("title",title);
-            exchange.setProperty("bookProps", bookProps);
-            return isbn;
-        }
-
-        @Converter
-        public BookRecord buildBook(final Map<String, Object> properties) {
+        public BookRecord buildBook(final Properties properties) {
             final ISBN13 bookCode = (ISBN13) properties.get("isbn");
             final String author = (String) properties.get("author");
             final LocalDate published = (LocalDate) properties.get("published");

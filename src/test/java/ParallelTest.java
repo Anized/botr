@@ -17,8 +17,7 @@ public class ParallelTest extends CamelTestSupport {
     @Test
     @DisplayName("Request should be processed in parallel and an aggregated result returned")
     public void testBookLookupProcess() {
-        final BookRecord result = template.requestBody("direct:parallel", "Babylon's Ashes", BookRecord.class);
-        assertTrue(result.toString().length() > 0);
+        final BookRecord result = template.requestBody("direct:book-search", "Babylon's Ashes", BookRecord.class);
         assertEquals("ISBN-13:9780316217644", result.getIsbnCode().toString());
         assertEquals("S.A. Corey", result.getAuthor());
         assertEquals(BigDecimal.valueOf(3.71), result.getPrice());
@@ -31,7 +30,7 @@ public class ParallelTest extends CamelTestSupport {
     public void testInvalidServiceResult() {
         final String expectError = "failed to lookup ISBN code for title 'Caliban's War'";
         final Throwable exception = assertThrows(Exception.class, () ->
-                template.requestBody("direct:parallel", "Caliban's War", BookRecord.class));
+                template.requestBody("direct:book-search", "Caliban's War", BookRecord.class));
         assertEquals(expectError, Throwables.getRootCause(exception).getMessage());
     }
 

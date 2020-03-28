@@ -34,15 +34,4 @@ public class BookRecord {
         return published;
     }
 
-    @Override
-    public String toString() {
-        return "BookRecord{" +
-                "isbnCode=" + isbnCode +
-                ", author='" + author + '\'' +
-                ", published='" + published + '\'' +
-                ", title='" + title + '\'' +
-                ", price=" + price +
-                '}';
-    }
-
 }

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.CompletableFuture;
 
 public class CamelApp {
-    private static Logger logger = LoggerFactory.getLogger(CamelApp.class);
+    private static final Logger logger = LoggerFactory.getLogger(CamelApp.class);
 
     public static void main(final String[] args) throws Exception {
         logger.info("\uD83D\uDC2B Starting Camel journey...");
