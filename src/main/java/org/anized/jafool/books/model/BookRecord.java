@@ -10,7 +10,8 @@ public class BookRecord {
     private final String title;
     private final BigDecimal price;
 
-    public BookRecord(final ISBN13 bookCode, final String author, final LocalDate published, final String title, final BigDecimal price) {
+    public BookRecord(final ISBN13 bookCode, final String author, final LocalDate published,
+                      final String title, final BigDecimal price) {
         this.isbnCode = bookCode;
         this.published = published;
         this.author = author;
@@ -18,20 +19,10 @@ public class BookRecord {
         this.price = price;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-    public String getTitle() {
-        return title;
-    }
-    public BigDecimal getPrice() {
-        return price;
-    }
-    public ISBN13 getIsbnCode() {
-        return isbnCode;
-    }
-    public LocalDate getPublished() {
-        return published;
-    }
+    public String getAuthor() { return author; }
+    public String getTitle() { return title; }
+    public BigDecimal getPrice() { return price; }
+    public ISBN13 getIsbnCode() { return isbnCode; }
+    public LocalDate getPublished() { return published; }
 
 }

@@ -1,6 +1,6 @@
 # Parallel Routes
 ## Example
-This example implements a fictitious process, whereby a request - a book title - is transformed into a
+This example implements a simple process, whereby a request - a book title - is transformed into a
 detailed `BookRecord` domain object.  To do this, four endpoints are queried: initially, the book title
 is used to look-up the ISBN code for the book, it's natural key, that will be used in later processing 
 stages.
@@ -10,7 +10,9 @@ needed to assemble the domain object.  These queries happen concurrently, and to
 includes a random delay, making it unlikely that the stages will complete in any deterministic order.
 
 Each of these processes has it's own copy of the _exchange_ output from stage (2), into which it will store
-the data it is responsible for querying (as an exchange property `bookProps`, as Java `Properties` object).
+the data it is responsible for querying, as the output `body`, a Java `Properties` instance, with a key/value
+pair representing the data retrieved.
+
 As the stages complete, the aggregation strategy object, `MergeHub`, sets this map to be the output object.
 
 Finally, the route specifies that the resulting value should be converted to a `BookRecord`, which is done
@@ -20,10 +22,10 @@ returned by the previous stages from the properties map, using them to construct
 ```
                                             (i) +----------------------+
                                        ,------> | seda:published-query | -------,
-       (1)            (2)             /         +----------------------+         \           (5)
-   +---------+    +------------+     /     (ii) +----------------------+          \     +------------+
-   | "title" | -> | isbnLookup | --(3)--------> |   seda:price-query   | --------(4)--> | BookRecord |
-   +---------+    +------------+     \          +----------------------+          /     +------------+
+      (1)              (2)            /         +----------------------+         \            (5)
+  +---------+     +------------+     /     (ii) +----------------------+          \      +------------+
+  | "title" | --> | isbnLookup | --(3)--------> |   seda:price-query   | ---------(4)--> | BookRecord |
+  +---------+     +------------+     \          +----------------------+          /      +------------+
                                       \   (iii) +----------------------+         /           
                                        `------> |   seda:author-query  | -------'
                                                 +----------------------+
@@ -52,8 +54,9 @@ from("direct:book-search")
         .convertBodyTo(BookRecord.class);
 ```
 Rather than make external calls, this example uses methods in a `BookServices` class to lookup the data needed. 
-The route stages use the `seda:` (staged event-driven architecture: an async in-memory queue) component to connect
-these services.  
+The route stages use the `seda:` component
+([staged event-driven architecture](https://en.wikipedia.org/wiki/Staged_event-driven_architecture):
+an async in-memory queue) component to connect these services.  
 
 In a real-world scenario, each parallel stage might need to construct a different request and/or endpoint,
 call the appropriate component, e.g., `http:`, and transform the result back into the required form. 

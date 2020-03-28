@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
 import java.util.function.Function;
@@ -29,26 +30,26 @@ public class BookServices {
 
     public void isbnLookup(final Exchange exchange) {
         final String title = exchange.getIn().getBody(String.class);
-        if(!bookCatalog.containsKey(title)) {
-            throw new IllegalStateException("failed to lookup ISBN code for title '"+title+"'");
-        }
-        final ISBN13 isbn = bookCatalog.get(title);
-        final Properties bookProps = new Properties();
-        bookProps.put("isbn", isbn);
-        bookProps.put("title",title);
-        exchange.getMessage().setBody(bookProps);
+        Optional.ofNullable(bookCatalog.get(title)).map(isbn -> {
+            final Properties bookProps = new Properties();
+            bookProps.put("isbn", isbn);
+            bookProps.put("title",title);
+            exchange.getMessage().setBody(bookProps);
+            return true;
+        }).orElseThrow(() ->
+                new IllegalStateException("failed to lookup ISBN code for title '"+title+"'"));
     }
 
     public void publishedLookup(final Exchange exchange) {
-        query(exchange,"published", isbn -> publicationDates.get(isbn));
+        query(exchange,"published", publicationDates::get);
     }
 
     public void priceLookup(final Exchange exchange) {
-        query(exchange,"price", isbn -> priceList.get(isbn));
+        query(exchange,"price", priceList::get);
     }
 
     public void authorLookup(final Exchange exchange) {
-        query(exchange, "author", isbn -> authorCatalog.get(isbn));
+        query(exchange, "author", authorCatalog::get);
     }
 
     private static void query(final Exchange exchange, final String field,

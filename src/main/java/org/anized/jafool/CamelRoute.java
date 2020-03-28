@@ -8,6 +8,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jackson.JacksonDataFormat;
 
 import java.time.ZonedDateTime;
+import java.util.Optional;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static org.apache.camel.http.common.HttpMethods.GET;
@@ -63,10 +64,8 @@ public class CamelRoute extends RouteBuilder {
           * @return ZonedDateTime set from the {@code currentDateTime} in the {@code report} */
         @Converter
         public ZonedDateTime toZonedDateTime(final DateTimeReport report) {
-            if(report.currentDateTime == null) {
-                throw new IllegalStateException(report.serviceResponse);
-            }
-            return ZonedDateTime.parse(report.currentDateTime);
+            return Optional.ofNullable(report.currentDateTime).map(ZonedDateTime::parse)
+                    .orElseThrow(() -> new IllegalStateException(report.serviceResponse));
         }
     }
 }

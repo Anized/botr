@@ -5,6 +5,7 @@ import org.anized.jafool.books.MergeHub;
 import org.anized.jafool.books.model.BookRecord;
 import org.anized.jafool.books.model.ISBN13;
 import org.apache.camel.Converter;
+import org.apache.camel.TypeConverters;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.ThreadPoolBuilder;
 
@@ -25,7 +26,7 @@ public class ParallelRoute extends RouteBuilder {
                         .maxQueueSize(150)
                         .build("book-processor-pool");
         getContext().getTypeConverterRegistry()
-                .addTypeConverters(new TypeConverters());
+                .addTypeConverters(new DataConverters());
 
         from("direct:book-search")
                 .process(bookServices::isbnLookup)
@@ -50,15 +51,15 @@ public class ParallelRoute extends RouteBuilder {
     }
 
 
-    public static class TypeConverters implements org.apache.camel.TypeConverters {
+    public static class DataConverters implements TypeConverters {
         @Converter
         public BookRecord buildBook(final Properties properties) {
-            final ISBN13 bookCode = (ISBN13) properties.get("isbn");
-            final String author = (String) properties.get("author");
-            final LocalDate published = (LocalDate) properties.get("published");
-            final String title = (String) properties.get("title");
-            final BigDecimal price = (BigDecimal) properties.get("price");
-            return new BookRecord(bookCode, author, published, title, price);
+            return new BookRecord(
+                    (ISBN13) properties.get("isbn"),
+                    (String) properties.get("author"),
+                    (LocalDate) properties.get("published"),
+                    (String) properties.get("title"),
+                    (BigDecimal) properties.get("price"));
         }
     }
 

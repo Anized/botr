@@ -1,20 +1,21 @@
 package org.anized.jafool.books.model;
 
+import java.util.Optional;
+
 public class ISBN13 {
-    public static final String ISBN_13 = "ISBN-13:";
+    public static final String ISBN_TAG = "ISBN-13:";
     private final long code;
 
     public ISBN13(final String code) {
-        if (code == null || code.trim().isEmpty() || !code.toUpperCase().startsWith(ISBN_13)) {
-            throw new IllegalStateException(
-                    "ISBN code cannot be empty or null and must be prefixed with 'ISBN-13:'");
-        }
-        this.code = Long.parseLong(code.split(":")[1].trim().replaceAll("-", ""));
+        this.code = Optional.ofNullable(code)
+                .filter(isbn -> !isbn.trim().isEmpty() && isbn.toUpperCase().startsWith(ISBN_TAG))
+                .map(isbn -> Long.parseLong(isbn.split(":")[1].trim().replaceAll("-", "")))
+                .orElseThrow(() ->
+                        new IllegalStateException(
+                                "ISBN code cannot be empty or null and must be prefixed with 'ISBN-13:'"));
     }
 
     @Override
-    public String toString() {
-        return String.format("%s%d", ISBN_13, code);
-    }
+    public String toString() { return String.format("%s%d", ISBN_TAG, code); }
 
 }
