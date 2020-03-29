@@ -38,14 +38,11 @@ public class ParallelTest extends CamelTestSupport {
     @DisplayName("Invalid ISBN codes will be rejected")
     public void testInvalidISBNCode() {
         final String expectError = "ISBN code cannot be empty or null and must be prefixed with 'ISBN-13:'";
-        final Throwable exception1 = assertThrows(Exception.class, () ->
-                new ISBN13(null));
+        final Throwable exception1 = assertThrows(Exception.class, () -> new ISBN13(null));
         assertEquals(expectError, Throwables.getRootCause(exception1).getMessage());
-        final Throwable exception2 = assertThrows(Exception.class, () ->
-                new ISBN13(""));
+        final Throwable exception2 = assertThrows(Exception.class, () -> new ISBN13(""));
         assertEquals(expectError, Throwables.getRootCause(exception2).getMessage());
-        final Throwable exception3 = assertThrows(Exception.class, () ->
-                new ISBN13("9780316217644"));
+        final Throwable exception3 = assertThrows(Exception.class, () -> new ISBN13("9780316217644"));
         assertEquals(expectError, Throwables.getRootCause(exception3).getMessage());
     }
 

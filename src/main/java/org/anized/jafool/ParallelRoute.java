@@ -1,21 +1,21 @@
 package org.anized.jafool;
 
-import org.anized.jafool.books.BookServices;
+import org.anized.jafool.books.LibraryServices;
 import org.anized.jafool.books.MergeHub;
 import org.anized.jafool.books.model.BookRecord;
 import org.anized.jafool.books.model.ISBN13;
 import org.apache.camel.Converter;
 import org.apache.camel.TypeConverters;
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.ThreadPoolBuilder;
+import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
-public class ParallelRoute extends RouteBuilder {
-    private final BookServices bookServices = new BookServices();
+public class ParallelRoute extends EndpointRouteBuilder {
+    private final LibraryServices library = new LibraryServices();
 
     @Override
     public void configure() throws Exception {
@@ -29,31 +29,31 @@ public class ParallelRoute extends RouteBuilder {
                 .addTypeConverters(new DataConverters());
 
         from("direct:book-search")
-                .process(bookServices::isbnLookup)
+                .process(library::setIsbnCode)
                 .multicast()
                 .parallelProcessing(true)
                 .executorService(ec)
                 .aggregationStrategy(new MergeHub())
-                    .to("seda:published-query")
-                    .to("seda:price-query")
-                    .to("seda:author-query")
+                    .to(seda("published-query"))
+                    .to(seda("price-query"))
+                    .to(seda("author-query"))
                 .end()
                 .convertBodyTo(BookRecord.class);
 
-        from("seda:published-query").routeId("published-lookup")
-                .process(bookServices::publishedLookup);
+        from(seda("published-query")).routeId("published-lookup")
+                .process(library::publishedLookup);
 
-        from("seda:price-query").routeId("price-lookup")
-                .process(bookServices::authorLookup);
+        from(seda("price-query")).routeId("price-lookup")
+                .process(library::authorLookup);
 
-        from("seda:author-query").routeId("author-lookup")
-                .process(bookServices::priceLookup);
+        from(seda("author-query")).routeId("author-lookup")
+                .process(library::priceLookup);
     }
 
 
     public static class DataConverters implements TypeConverters {
         @Converter
-        public BookRecord buildBook(final Properties properties) {
+        public BookRecord bookBinder(final Properties properties) {
             return new BookRecord(
                     (ISBN13) properties.get("isbn"),
                     (String) properties.get("author"),

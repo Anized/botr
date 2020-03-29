@@ -20,15 +20,15 @@ by a registered converter with the signature `Properties => BookRecord` - this f
 returned by the previous stages from the properties map, using them to construct the domain object.
 
 ```
-                                            (i) +----------------------+
-                                       ,------> | seda:published-query | -------,
-      (1)              (2)            /         +----------------------+         \            (5)
-  +---------+     +------------+     /     (ii) +----------------------+          \      +------------+
-  | "title" | --> | isbnLookup | --(3)--------> |   seda:price-query   | ---------(4)--> | BookRecord |
-  +---------+     +------------+     \          +----------------------+          /      +------------+
-                                      \   (iii) +----------------------+         /           
-                                       `------> |   seda:author-query  | -------'
-                                                +----------------------+
+      (1)               (2)         (3)      (i) +----------------------+          (4)           (5)
+       |                 |           |  ,------> | seda:published-query | -------,  |             | 
+       |                 |           | /         +----------------------+         \ |             |
+  +----*----+     +------*------+    |/     (ii) +----------------------+          \|      +------*-----+
+  | "title" | --> | setIsbnCode | ---*---------> |   seda:price-query   | ----------*----> | BookRecord |
+  +---------+     +-------------+     \          +----------------------+          /       +------------+
+                                       \   (iii) +----------------------+         /           
+                                        `------> |   seda:author-query  | -------'
+                                                 +----------------------+
 ```
 1.  Request received
 1.  ISBN Code lookup call
@@ -42,21 +42,21 @@ returned by the previous stages from the properties map, using them to construct
 ## Implementation
 ```java
 from("direct:book-search")
-        .process(bookServices::isbnLookup)
+        .process(library::setIsbnCode)
         .multicast()
         .parallelProcessing(true)
         .executorService(ec)
         .aggregationStrategy(new MergeHub())
-            .to("seda:published-query")
-            .to("seda:price-query")
-            .to("seda:author-query")
+            .to(seda("published-query"))
+            .to(seda("price-query"))
+            .to(seda("author-query"))
         .end()
         .convertBodyTo(BookRecord.class);
 ```
 Rather than make external calls, this example uses methods in a `BookServices` class to lookup the data needed. 
 The route stages use the `seda:` component
 ([staged event-driven architecture](https://en.wikipedia.org/wiki/Staged_event-driven_architecture):
-an async in-memory queue) component to connect these services.  
+an async in-memory queue) to connect these services.  
 
 In a real-world scenario, each parallel stage might need to construct a different request and/or endpoint,
 call the appropriate component, e.g., `http:`, and transform the result back into the required form. 
