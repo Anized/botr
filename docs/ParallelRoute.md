@@ -1,23 +1,31 @@
 # Parallel Routes
-## Example
-This example implements a simple process, whereby a request - a book title - is transformed into a
-detailed `BookRecord` domain object.  To do this, four endpoints are queried: initially, the book title
-is used to look-up the ISBN code for the book, it's natural key, that will be used in later processing 
-stages.
 
-Having obtained this key, the process fans-out into three parallel stages, to query various pieces of data 
-needed to assemble the domain object.  These queries happen concurrently, and to make the example realistic,
+As an example of parallel processing, consider the enterprise 'scatter-gather' pattern, as illustrated below. 
+Here, a message is routed to a number recipients, and the responses re-aggregated back into a single message.
+These recipients could be called sequentially, or, as in the example developed here, in parallel, potentially
+saving time if the stages are remote and slow, but also providing the flexibility to return a result even when
+not all the stages return in a given time-frame, or if some fail.
+![Scatter-Gather](http://www.enterpriseintegrationpatterns.com/img/BroadcastAggregate.gif "Scatter-Gather")
+
+## Example
+This example implements a process similar to the one depicted above, but, where a request - a book title - is 
+transformed into a resulting `BookRecord` domain object.
+  
+To do this, four endpoints are queried: initially, the book title is used to look-up the ISBN code for the book, 
+a natural key, that will be used in later processing stages.
+
+Having obtained this key, it is broadcast to three parallel stages, querying various pieces of data 
+needed to assemble the domain object.  These queries occur concurrently, and to make the example realistic,
 includes a random delay, making it unlikely that the stages will complete in any deterministic order.
 
-Each of these processes has it's own copy of the _exchange_ output from stage (2), into which it will store
-the data it is responsible for querying, as the output `body`, a Java `Properties` instance, with a key/value
-pair representing the data retrieved.
+Each of these processes has it's own copy of the _exchange_ output from stage (2), with the ISBN code, and into
+which it will store the results of the query as the output `body`, a Java `Properties` instance, with a key/value
+pair representing the result of the query. As each stage completes, the aggregation strategy object, `MergeHub`, 
+combines this with the results of the other stages, finally outputting a single, aggregated result.
 
-As the stages complete, the aggregation strategy object, `MergeHub`, sets this map to be the output object.
-
-Finally, the route specifies that the resulting value should be converted to a `BookRecord`, which is done
-by a registered converter with the signature `Properties => BookRecord` - this function gets the data
-returned by the previous stages from the properties map, using them to construct the domain object.
+Ultimately, the route specifies that the resulting value should be converted to a `BookRecord`, performed
+by a registered converter with the signature `Properties => BookRecord` - this function takes the aggregated 
+properties returned by the previous stages, constructing the domain object.
 
 ```
       (1)               (2)         (3)      (i) +----------------------+          (4)           (5)
@@ -53,10 +61,10 @@ from("direct:book-search")
         .end()
         .convertBodyTo(BookRecord.class);
 ```
-Rather than make external calls, this example uses methods in a `BookServices` class to lookup the data needed. 
+Rather than make external calls, this example uses methods in a `LibraryServices` class to query the data needed. 
 The route stages use the `seda:` component
 ([staged event-driven architecture](https://en.wikipedia.org/wiki/Staged_event-driven_architecture):
-an async in-memory queue) to connect these services.  
+an async in-memory queue) to connect to these services.  
 
 In a real-world scenario, each parallel stage might need to construct a different request and/or endpoint,
 call the appropriate component, e.g., `http:`, and transform the result back into the required form. 

@@ -14,7 +14,8 @@ Integrations are defined in code as *Routes*, using either a declarative text (X
 programming language. The Java Camel DSL is a fluent-builder style DSL that provides a simple and clear language for
 defining routes.
 
-[Parallel Processing Example](docs/ParallelRoute.md)
+See [Parallel Processing Example](docs/ParallelRoute.md) 
+for an example of a parallel broadcast/aggregation pattern implementation.
 
 ## Routes
 A Camel route is a blueprint for a process execution, consisting of a number of stages linked together, 

@@ -28,15 +28,16 @@ public class LibraryServices {
     public void setIsbnCode(final Exchange exchange) {
         final String title = exchange.getIn().getBody(String.class);
         Optional.ofNullable(bookCatalog.get(exchange.getIn().getBody(String.class)))
-                .map(isbn -> setCodeAndTitle.apply(isbn, title))
+                .map(isbn -> mapCodeAndTitle.apply(isbn, title))
                 .map(props -> {
                     exchange.getMessage().setBody(props);
                     return true;
-                }).orElseThrow(() -> new IllegalStateException("" +
-                "failed to lookup ISBN code for title '" + title + "'"));
+                })
+                .orElseThrow(() -> new IllegalStateException(
+                        "failed to lookup ISBN code for title '" + title + "'"));
     }
 
-    private static final Function2<ISBN13,String,Properties> setCodeAndTitle = (isbn, title) -> {
+    private static final Function2<ISBN13,String,Properties> mapCodeAndTitle = (isbn, title) -> {
         final Properties result = new Properties();
         result.putAll(ImmutableMap.<String, Object>builder()
                 .put("isbn", isbn)
