@@ -6,9 +6,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.vavr.control.Try;
 import org.apache.camel.Exchange;
-import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
-import org.apache.camel.spi.PropertiesComponent;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -31,7 +31,7 @@ public class BuilderRoute extends EndpointRouteBuilder {
 
         from("direct:build-record")
                 .setProperty("record-key", simple("${body}"))
-                .setHeader("x-accela-appid").constant("635890123120636216")
+                .setHeader("x-accela-appid").simple("${properties:accela-appid}")
                 .setHeader("x-accela-agency").simple("${properties:accela-agency}")
                 .setHeader("x-accela-environment").simple("${properties:accela-environment}")
                 .setHeader("Authorization").simple("${properties:auth-key}")
