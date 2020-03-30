@@ -1,0 +1,635 @@
+{
+	"address": [
+		{
+			"id": 1006312463,
+			"streetStart": 720,
+			"postalCode": "97208",
+			"city": "Portland",
+			"isPrimary": "N",
+			"serviceProviderCode": "QA",
+			"streetName": "Ankeney",
+			"state": {
+				"value": "OR",
+				"text": "OR"
+			}
+		}
+	],
+	"comments": [
+		{
+			"text": "test ",
+			"createdBy": "ADMIN",
+			"displayOnInspection": "N",
+			"id": 5139048,
+			"createdDate": "2020-03-30 01:52:02"
+		}
+	],
+	"conditions": [
+		{
+			"appliedDate": "2020-03-31 00:00:00",
+			"longComments": "long comments",
+			"shortComments": "short comments",
+			"name": "Test Condition",
+			"id": 11801584,
+			"statusType": "Applied",
+			"serviceProviderCode": "QA",
+			"effectiveDate": "2020-03-31 00:00:00",
+			"expirationDate": "2020-04-30 00:00:00",
+			"type": {
+				"value": "Red Tag2",
+				"text": "Red Tag2"
+			},
+			"group": {
+				"value": "accela",
+				"text": "accela"
+			},
+			"status": {
+				"value": "Open\u0002Applied",
+				"text": "Open(Applied)"
+			},
+			"priority": {
+				"value": "1",
+				"text": "High"
+			},
+			"severity": {
+				"value": "Notice",
+				"text": "Notice"
+			},
+			"activeStatus": {
+				"value": "A",
+				"text": "Active"
+			},
+			"inheritable": {
+				"value": "N",
+				"text": "No"
+			},
+			"appliedbyDepartment": {
+				"value": "QA/QA/QA/NA/NA/NA/NA"
+			},
+			"appliedbyUser": {
+				"value": "ADMIN",
+				"text": "Administrator m Accela"
+			},
+			"displayNoticeInAgency": true,
+			"isIncludeNameInNotice": false,
+			"isIncludeShortCommentsInNotice": false,
+			"displayNoticeInCitizens": false,
+			"displayNoticeInCitizensFee": false,
+			"conditionType": 0
+		}
+	],
+	"conditionsOfApproval": [],
+	"contacts": [
+		{
+			"phone1": "1234567890",
+			"isPrimary": "Y",
+			"id": "274134786",
+			"individualOrOrganization": "individual",
+			"lastName": "stuff",
+			"firstName": "dude",
+			"middleName": "guy",
+			"status": {
+				"value": "A",
+				"text": "Active"
+			},
+			"type": {
+				"value": "Appellant",
+				"text": "Appellant"
+			},
+			"address": {},
+			"contactAddresses": []
+		}
+	],
+	"customFields": [
+		{
+			"Parcel Attribute 1": null,
+			"id": "GIS.cCLASSIC-PARCELS"
+		},
+		{
+			"Building Attribute 1": null,
+			"id": "GIS.cCLASSIC-BUILDINGS"
+		}
+	],
+	"customFieldsMetaData": [
+		{
+			"id": "GIS.cCLASSIC-PARCELS",
+			"text": "GIS.cCLASSIC-PARCELS",
+			"displayOrder": 0,
+			"fields": [
+				{
+					"id": "Parcel Attribute 1",
+					"text": "Parcel Attribute 1",
+					"isReadonly": "N",
+					"fieldType": "Text",
+					"maxLength": 0,
+					"isRequired": "N",
+					"displayOrder": 1
+				}
+			]
+		},
+		{
+			"id": "GIS.cCLASSIC-BUILDINGS",
+			"text": "GIS.cCLASSIC-BUILDINGS",
+			"displayOrder": 0,
+			"fields": [
+				{
+					"id": "Building Attribute 1",
+					"text": "Building Attribute 1",
+					"isReadonly": "N",
+					"fieldType": "Text",
+					"maxLength": 0,
+					"isRequired": "N",
+					"displayOrder": 1
+				}
+			]
+		}
+	],
+	"customTables": [],
+	"customTablesMetadata": [],
+	"documents": [],
+	"fees": [],
+	"payments": [],
+	"inspections": [
+		{
+			"address": {
+				"id": 1006312463,
+				"streetStart": 720,
+				"postalCode": "97208",
+				"streetName": "Ankeney",
+				"isPrimary": "N",
+				"city": "Portland",
+				"serviceProviderCode": "QA",
+				"state": {
+					"value": "OR",
+					"text": "OR"
+				}
+			},
+			"priority": 0,
+			"id": 18219544,
+			"publicVisible": "Y",
+			"type": {
+				"value": "ncrease the size of the inspection description field to be more than 50 characters",
+				"id": 84007720,
+				"group": "02BLDG1",
+				"text": "ncrease the size of the inspection description field to be more than 50 characters"
+			},
+			"requiredInspection": "N",
+			"category": "Insp Scheduled",
+			"inspectorId": "ADMIN",
+			"serviceProviderCode": "QA",
+			"recordId": {
+				"id": "QA-20CAP-00000-000KO",
+				"customId": "20CAP-00000-000KO",
+				"trackingId": 419893182971,
+				"serviceProviderCode": "QA",
+				"capClass": "COMPLETE",
+				"value": "20CAP-00000-000KO"
+			},
+			"status": {
+				"value": "Scheduled",
+				"text": "Scheduled"
+			},
+			"requestorFirstName": "Administrator",
+			"requestorMiddleName": "m",
+			"requestorLastName": "Accela",
+			"units": 2,
+			"inspectorFullName": "Administrator m Accela",
+			"isAutoAssign": "N",
+			"requestDate": "2020-03-30",
+			"scheduleDate": "2020-03-30"
+		}
+	],
+	"parcels": [],
+	"record": {
+		"id": "QA-20CAP-00000-000KO",
+		"type": {
+			"module": "Building",
+			"value": "Building/Commercial/Demolition/b4",
+			"type": "Commercial",
+			"category": "b4",
+			"text": "Boiler Operator 4",
+			"subType": "Demolition",
+			"group": "Building",
+			"alias": "Boiler Operator 4",
+			"id": "Building-Commercial-Demolition-b4"
+		},
+		"module": "Building",
+		"jobValue": 0,
+		"trackingId": 419893182971,
+		"customId": "20CAP-00000-000KO",
+		"totalJobCost": 0,
+		"undistributedCost": 0,
+		"updateDate": "2020-03-25 09:34:57",
+		"recordClass": "COMPLETE",
+		"serviceProviderCode": "QA",
+		"createdBy": "ADMIN",
+		"initiatedProduct": "AV360",
+		"statusDate": "2020-03-25 09:34:57",
+		"openedDate": "2020-03-25 00:00:00",
+		"value": "20CAP-00000-000KO",
+		"totalFee": 0,
+		"totalPay": 0,
+		"balance": 0,
+		"booking": false,
+		"infraction": false,
+		"misdemeanor": false,
+		"offenseWitnessed": false,
+		"defendantSignature": false,
+		"publicOwned": false,
+		"address": {
+			"id": 1006312463,
+			"streetStart": 720,
+			"postalCode": "97208",
+			"city": "Portland",
+			"isPrimary": "N",
+			"serviceProviderCode": "QA",
+			"streetName": "Ankeney",
+			"state": {
+				"value": "OR",
+				"text": "OR"
+			}
+		}
+	},
+	"relatedRecords": [
+		{
+			"id": "QA-20CAP-00000-000L0",
+			"type": {
+				"value": "Building/Residential/Fire/Appliction",
+				"type": "Residential",
+				"category": "Appliction",
+				"text": "Residential",
+				"subType": "Fire",
+				"group": "Building",
+				"alias": "Residential",
+				"id": "Building-Residential-Fire-Appliction"
+			},
+			"relationship": "parent",
+			"customId": "995-20-000702-ELEC",
+			"trackingId": 419853342283,
+			"serviceProveCode": "QA"
+		}
+	],
+	"workflows": [
+		{
+			"isCompleted": "N",
+			"isActive": "Y",
+			"lastModifiedDate": "2020-03-25 09:34:57",
+			"processCode": "BLDG-WF",
+			"dueDate": "2020-03-26 00:00:00",
+			"description": "Application Acceptance",
+			"assignedDate": "2020-03-25 00:00:00",
+			"serviceProviderCode": "QA",
+			"id": "1-3908",
+			"status": {
+				"value": "Pending",
+				"text": "Pending"
+			},
+			"currentTaskId": "010000000000000",
+			"nextTaskId": "019000000000000",
+			"daysDue": 1,
+			"hoursSpent": 0,
+			"assignedToDepartment": {
+				"value": "QA/NA/NA/NA/NA/NA/NA",
+				"text": "Accela"
+			},
+			"estimatedHours": 20,
+			"statuses": [
+				{
+					"value": "Approved",
+					"text": "Approved"
+				},
+				{
+					"value": "Pending",
+					"text": "Pending"
+				},
+				{
+					"value": "branch",
+					"text": "branch"
+				}
+			]
+		},
+		{
+			"isCompleted": "N",
+			"isActive": "N",
+			"lastModifiedDate": "2020-03-25 09:34:57",
+			"processCode": "BLDG-WF",
+			"description": "Overall Plan Check",
+			"serviceProviderCode": "QA",
+			"id": "7-3908",
+			"status": {
+				"value": "Denied",
+				"text": "Denied"
+			},
+			"currentTaskId": "014000000000000",
+			"nextTaskId": "019020000000000",
+			"daysDue": 0,
+			"hoursSpent": 0,
+			"assignedToDepartment": {
+				"value": "QA/NA/NA/NA/NA/NA/NA",
+				"text": "Accela"
+			},
+			"estimatedHours": 0,
+			"statuses": [
+				{
+					"value": "Approved",
+					"text": "Approved"
+				},
+				{
+					"value": "Denied",
+					"text": "Denied"
+				},
+				{
+					"value": "loop",
+					"text": "loop"
+				}
+			]
+		},
+		{
+			"isCompleted": "N",
+			"isActive": "N",
+			"lastModifiedDate": "2020-03-25 09:34:57",
+			"processCode": "BLDG-WF",
+			"description": "Building Review",
+			"serviceProviderCode": "QA",
+			"id": "2-3908",
+			"status": {
+				"value": "Pending",
+				"text": "Pending"
+			},
+			"currentTaskId": "019000000000000",
+			"nextTaskId": "014000000000000",
+			"daysDue": 0,
+			"hoursSpent": 0,
+			"assignedToDepartment": {
+				"value": "QA/NA/NA/NA/NA/NA/NA",
+				"text": "Accela"
+			},
+			"estimatedHours": 0,
+			"statuses": [
+				{
+					"value": "Approved",
+					"text": "Approved"
+				},
+				{
+					"value": "Failed",
+					"text": "Failed"
+				},
+				{
+					"value": "Pending",
+					"text": "Pending"
+				}
+			]
+		},
+		{
+			"isCompleted": "N",
+			"isActive": "N",
+			"lastModifiedDate": "2020-03-25 09:34:57",
+			"processCode": "BLDG-WF",
+			"description": "Plan Review",
+			"serviceProviderCode": "QA",
+			"id": "3-3908",
+			"status": {
+				"value": "10. Denied",
+				"text": "10. Denied"
+			},
+			"currentTaskId": "019000000000000",
+			"nextTaskId": "014000000000000",
+			"daysDue": 0,
+			"hoursSpent": 0,
+			"assignedToDepartment": {
+				"value": "QA/NA/NA/NA/NA/NA/NA",
+				"text": "Accela"
+			},
+			"estimatedHours": 0,
+			"statuses": [
+				{
+					"value": "10. Denied",
+					"text": "10. Denied"
+				},
+				{
+					"value": "Approved",
+					"text": "Approved"
+				}
+			]
+		},
+		{
+			"isCompleted": "N",
+			"isActive": "N",
+			"lastModifiedDate": "2020-03-25 09:34:57",
+			"processCode": "BLDG-WF",
+			"description": "Fire Review",
+			"serviceProviderCode": "QA",
+			"id": "4-3908",
+			"status": {
+				"value": "Denied",
+				"text": "Denied"
+			},
+			"currentTaskId": "019000000000000",
+			"nextTaskId": "014000000000000",
+			"daysDue": 0,
+			"hoursSpent": 0,
+			"assignedToDepartment": {
+				"value": "QA/NA/NA/NA/NA/NA/NA",
+				"text": "Accela"
+			},
+			"estimatedHours": 0,
+			"statuses": [
+				{
+					"value": "Approved",
+					"text": "Approved"
+				},
+				{
+					"value": "Denied",
+					"text": "Denied"
+				}
+			]
+		},
+		{
+			"isCompleted": "N",
+			"isActive": "N",
+			"lastModifiedDate": "2020-03-25 09:34:57",
+			"processCode": "BLDG-WF",
+			"description": "Engineering Review",
+			"serviceProviderCode": "QA",
+			"id": "5-3908",
+			"status": {
+				"value": "Denied",
+				"text": "Denied"
+			},
+			"currentTaskId": "019000000000000",
+			"nextTaskId": "014000000000000",
+			"daysDue": 0,
+			"hoursSpent": 0,
+			"assignedToDepartment": {
+				"value": "QA/NA/NA/NA/NA/NA/NA",
+				"text": "Accela"
+			},
+			"estimatedHours": 0,
+			"statuses": [
+				{
+					"value": "Approved",
+					"text": "Approved"
+				},
+				{
+					"value": "Denied",
+					"text": "Denied"
+				}
+			]
+		},
+		{
+			"isCompleted": "N",
+			"isActive": "N",
+			"lastModifiedDate": "2020-03-25 09:34:57",
+			"processCode": "BLDG-WF",
+			"description": "Environmental Review",
+			"serviceProviderCode": "QA",
+			"id": "6-3908",
+			"status": {
+				"value": "Denied",
+				"text": "Denied"
+			},
+			"currentTaskId": "019000000000000",
+			"nextTaskId": "014000000000000",
+			"daysDue": 0,
+			"hoursSpent": 0,
+			"assignedToDepartment": {
+				"value": "QA/NA/NA/NA/NA/NA/NA",
+				"text": "Accela"
+			},
+			"estimatedHours": 0,
+			"statuses": [
+				{
+					"value": "Approved",
+					"text": "Approved"
+				},
+				{
+					"value": "Denied",
+					"text": "Denied"
+				}
+			]
+		},
+		{
+			"isCompleted": "N",
+			"isActive": "N",
+			"lastModifiedDate": "2020-03-25 09:34:57",
+			"processCode": "BLDG-WF",
+			"description": "Permit Issuance",
+			"serviceProviderCode": "QA",
+			"id": "8-3908",
+			"status": {
+				"value": "Pending",
+				"text": "Pending"
+			},
+			"currentTaskId": "020000000000000",
+			"nextTaskId": "022010000000000",
+			"daysDue": 0,
+			"hoursSpent": 0,
+			"assignedToDepartment": {
+				"value": "QA/NA/NA/NA/NA/NA/NA",
+				"text": "Accela"
+			},
+			"estimatedHours": 0,
+			"statuses": [
+				{
+					"value": "Approved",
+					"text": "Approved"
+				},
+				{
+					"value": "Pending",
+					"text": "Pending"
+				},
+				{
+					"value": "loop",
+					"text": "loop"
+				}
+			]
+		},
+		{
+			"isCompleted": "N",
+			"isActive": "N",
+			"lastModifiedDate": "2020-03-25 09:34:57",
+			"processCode": "BLDG-WF",
+			"description": "Inspection",
+			"serviceProviderCode": "QA",
+			"id": "9-3908",
+			"status": {
+				"value": "Scheduled",
+				"text": "Scheduled"
+			},
+			"currentTaskId": "022000000000000",
+			"nextTaskId": "024000000000000",
+			"daysDue": 0,
+			"hoursSpent": 0,
+			"assignedToDepartment": {
+				"value": "QA/NA/NA/NA/NA/NA/NA",
+				"text": "Accela"
+			},
+			"estimatedHours": 0,
+			"statuses": [
+				{
+					"value": "Approved",
+					"text": "Approved"
+				},
+				{
+					"value": "Scheduled",
+					"text": "Scheduled"
+				}
+			]
+		},
+		{
+			"isCompleted": "N",
+			"isActive": "N",
+			"lastModifiedDate": "2020-03-25 09:34:57",
+			"processCode": "BLDG-WF",
+			"description": "Certificate of Occupancy",
+			"serviceProviderCode": "QA",
+			"id": "10-3908",
+			"status": {
+				"value": "Pending",
+				"text": "Pending"
+			},
+			"currentTaskId": "024000000000000",
+			"nextTaskId": "026000000000000",
+			"daysDue": 0,
+			"hoursSpent": 0,
+			"assignedToDepartment": {
+				"value": "QA/NA/NA/NA/NA/NA/NA",
+				"text": "Accela"
+			},
+			"estimatedHours": 0,
+			"statuses": [
+				{
+					"value": "Issued",
+					"text": "Issued"
+				},
+				{
+					"value": "Pending",
+					"text": "Pending"
+				}
+			]
+		},
+		{
+			"isCompleted": "N",
+			"isActive": "N",
+			"lastModifiedDate": "2020-03-25 09:34:57",
+			"processCode": "BLDG-WF",
+			"description": "Closure",
+			"serviceProviderCode": "QA",
+			"id": "11-3908",
+			"currentTaskId": "026000000000000",
+			"nextTaskId": "000000000000000",
+			"daysDue": 0,
+			"hoursSpent": 0,
+			"assignedToDepartment": {
+				"value": "QA/NA/NA/NA/NA/NA/NA",
+				"text": "Accela"
+			},
+			"estimatedHours": 0,
+			"statuses": [
+				{
+					"value": "Complete",
+					"text": "Complete"
+				}
+			]
+		}
+	]
+}

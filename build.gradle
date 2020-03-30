@@ -8,6 +8,16 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -17,6 +27,8 @@ ext {
 }
 
 dependencies {
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.4.0'
     implementation "org.apache.camel:camel-core:${camelVersion}"
     implementation "org.apache.camel:camel-endpointdsl:${camelVersion}"
     implementation "org.apache.camel:camel-main:${camelVersion}"
@@ -29,6 +41,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
     testImplementation "org.apache.camel:camel-test-junit5:${camelVersion}"
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+
 }
 
 test {
