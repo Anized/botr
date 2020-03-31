@@ -15,19 +15,18 @@ import static org.apache.camel.http.common.HttpMethods.GET;
 
 public class EnrichmentRoute extends EndpointRouteBuilder {
     private final ObjectMapper mapper = new ObjectMapper();
-    private final String contextKey;
+    private final String routeKey;
 
-    public EnrichmentRoute(final String contextKey) {
-        this.contextKey = contextKey;
+    public EnrichmentRoute(final String routeKey) {
+        this.routeKey = routeKey;
     }
 
     @Override
     public void configure() {
-
-        from(seda(contextKey)).routeId(contextKey)
-                .setProperty("context-key", simple(contextKey))
+        from(seda(routeKey)).routeId(routeKey)
+                .setProperty("route-key", simple(routeKey))
                 .setHeader(Exchange.HTTP_METHOD).constant(GET)
-                .toD("${properties:base-url}/${exchangeProperty.record-key}/${exchangeProperty.context-key}?offset=0")
+                .toD("${properties:base-url}/${exchangeProperty.record-key}/${exchangeProperty.route-key}?offset=0")
                 .process(this::convert);
     }
 
@@ -41,7 +40,7 @@ public class EnrichmentRoute extends EndpointRouteBuilder {
         final JsonNodeFactory factory = JsonNodeFactory.instance;
         final ObjectNode object = factory.objectNode();
         final ArrayList<ObjectNode> list = new ArrayList<>();
-        list.add(object.set(contextKey, result));
+        list.add(object.set(routeKey, result));
         exch.getMessage().setBody(list, List.class);
     }
 
