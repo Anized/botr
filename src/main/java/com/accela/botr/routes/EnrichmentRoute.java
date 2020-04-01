@@ -2,18 +2,17 @@ package com.accela.botr.routes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.vavr.control.Try;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.apache.camel.http.common.HttpMethods.GET;
 
 public class EnrichmentRoute extends EndpointRouteBuilder {
+    public static final String RESULT_FIELD = "result";
     private final ObjectMapper mapper = new ObjectMapper();
     private final String routeKey;
 
@@ -30,18 +29,14 @@ public class EnrichmentRoute extends EndpointRouteBuilder {
                 .process(this::convert);
     }
 
-    private void convert(final Exchange exch) {
-        final String json = exch.getIn().getBody(String.class);
+    private void convert(final Exchange exchange) {
         final JsonNode result = Try.of(() ->
-                mapper.readValue(json, ObjectNode.class))
-                .filter(node -> node.has("result"))
-                .map(node -> node.get("result"))
-                .get();
-        final JsonNodeFactory factory = JsonNodeFactory.instance;
-        final ObjectNode object = factory.objectNode();
-        final ArrayList<ObjectNode> list = new ArrayList<>();
-        list.add(object.set(routeKey, result));
-        exch.getMessage().setBody(list, List.class);
+            mapper.readValue(exchange.getIn().getBody(String.class), ObjectNode.class))
+                .filter(node -> node.has(RESULT_FIELD))
+                .map(node -> node.get(RESULT_FIELD)).get();
+        exchange.getMessage().setBody(
+            JsonNodeFactory.instance.arrayNode(1)
+                .add(JsonNodeFactory.instance.objectNode().set(routeKey, result)), ArrayNode.class);
     }
 
 }

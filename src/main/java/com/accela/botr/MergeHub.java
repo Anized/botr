@@ -1,10 +1,10 @@
 package com.accela.botr;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import io.vavr.Function2;
 import org.apache.camel.AggregationStrategy;
 import org.apache.camel.Exchange;
 
-import java.util.List;
 import java.util.Optional;
 
 public class MergeHub implements AggregationStrategy {
@@ -14,8 +14,8 @@ public class MergeHub implements AggregationStrategy {
     }
 
     private static final Function2<Exchange, Exchange, Exchange> mergeBodies = (exch1, exch2) -> {
-        exch1.getIn().getBody(List.class)
-                .addAll(exch2.getIn().getBody(List.class));
+        exch1.getIn().getBody(ArrayNode.class)
+                .addAll(exch2.getIn().getBody(ArrayNode.class));
         return exch1;
     };
 }
