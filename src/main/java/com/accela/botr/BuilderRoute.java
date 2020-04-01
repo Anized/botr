@@ -1,7 +1,6 @@
 package com.accela.botr;
 
 import com.accela.botr.routes.EnrichmentRoute;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableList;
@@ -12,7 +11,6 @@ import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.spi.PropertiesComponent;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 public class BuilderRoute extends EndpointRouteBuilder {
@@ -58,14 +56,10 @@ public class BuilderRoute extends EndpointRouteBuilder {
 
     public static class DataConverters implements TypeConverters {
         @Converter
-        public String reduceObject(final List<ObjectNode> results) {
-            final ObjectNode result = results.stream().reduce(
-                    JsonNodeFactory.instance.objectNode(), (acc, item) -> {
-                        final Map.Entry<String, JsonNode> head = item.fields().next();
-                        acc.set(head.getKey(), head.getValue());
-                        return acc;
-                    }, (acc, item) -> acc);
-            return result.toPrettyString();
+        public String reduceJsonObject(final List<ObjectNode> results) {
+            return results.stream().reduce(
+                    JsonNodeFactory.instance.objectNode(), ObjectNode::setAll)
+                    .toPrettyString();
         }
     }
 
