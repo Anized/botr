@@ -1,6 +1,5 @@
 import com.accela.botr.BuilderRoute;
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit5.CamelTestSupport;
 import org.junit.jupiter.api.DisplayName;
@@ -13,13 +12,12 @@ public class BuilderTest extends CamelTestSupport {
     @Test
     @DisplayName("Request should result in output record being successfully built")
     public void testBookLookupProcess() {
-        final String result = template.requestBody("direct:build-record", "QA-20CAP-00000-000KO", String.class);
-        System.out.println("result:"+result);
-        final DocumentContext jpath = JsonPath.parse(result);
-        assertNotNull(jpath.read("$.comments"));
-        assertNotNull(jpath.read("$.conditions"));
-        assertNotNull(jpath.read("$.contacts"));
-        assertNotNull(jpath.read("$.inspections"));
+        final JsonNode result = template.requestBody("direct:build-record", "QA-20CAP-00000-000KO", JsonNode.class);
+        System.out.println("result:"+result.toPrettyString());
+        assertNotNull(result.get("comments"));
+        assertNotNull(result.get("conditions"));
+        assertNotNull(result.get("contacts"));
+        assertNotNull(result.get("inspections"));
     }
 
     @Override

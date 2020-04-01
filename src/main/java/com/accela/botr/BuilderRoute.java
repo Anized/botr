@@ -23,15 +23,15 @@ public class BuilderRoute extends EndpointRouteBuilder {
     @Override
     public void configure() throws Exception {
         final PropertiesComponent pc = getContext().getPropertiesComponent();
+        getContext().getTypeConverterRegistry()
+                .addTypeConverters(new DataConverters());
         pc.setLocation("classpath:route.properties");
         final ExecutorService ec =
                 new ThreadPoolBuilder(getContext())
-                        .poolSize(30)
-                        .maxPoolSize(150)
-                        .maxQueueSize(150)
+                        .poolSize(4)
+                        .maxPoolSize(40)
+                        .maxQueueSize(20)
                         .build("builder-pool");
-        getContext().getTypeConverterRegistry()
-                .addTypeConverters(new DataConverters());
 
         from("direct:build-record")
                 .setProperty("record-key", simple("${body}"))
@@ -49,7 +49,7 @@ public class BuilderRoute extends EndpointRouteBuilder {
                     .to(seda("inspections"))
                     .to(seda("customForms"))
                 .end()
-                .convertBodyTo(String.class);
+                .convertBodyTo(ObjectNode.class);
 
         for (final String routeName : subRoutes) {
             getContext().addRoutes(new EnrichmentRoute(routeName));
@@ -58,11 +58,10 @@ public class BuilderRoute extends EndpointRouteBuilder {
 
     public static class DataConverters implements TypeConverters {
         @Converter
-        public String reduceJsonObject(final ArrayNode results) {
+        public ObjectNode reduceJsonObject(final ArrayNode results) {
             return IntStream.range(0, results.size())
-                .mapToObj(n -> (ObjectNode) results.get(n))
-                .reduce(JsonNodeFactory.instance.objectNode(),
-                        ObjectNode::setAll).toString();
+                .mapToObj(i -> (ObjectNode) results.get(i))
+                .reduce(JsonNodeFactory.instance.objectNode(), ObjectNode::setAll);
         }
     }
 
