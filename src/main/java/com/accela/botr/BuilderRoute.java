@@ -58,14 +58,15 @@ public class BuilderRoute extends EndpointRouteBuilder {
 
     public static class DataConverters implements TypeConverters {
         @Converter
-        public String resultToJson(final List<ObjectNode> results) {
-            final JsonNodeFactory factory = JsonNodeFactory.instance;
-            final ObjectNode object = factory.objectNode();
-            results.forEach(item -> {
-                final Map.Entry<String, JsonNode> head = item.fields().next();
-                object.set(head.getKey(),  head.getValue());
-            });
-            return object.toPrettyString();
+        public String reduceObject(final List<ObjectNode> results) {
+            final ObjectNode result = results.stream().reduce(
+                    JsonNodeFactory.instance.objectNode(), (acc, item) -> {
+                        final Map.Entry<String, JsonNode> head = item.fields().next();
+                        acc.set(head.getKey(), head.getValue());
+                        return acc;
+                    }, (acc, item) -> acc);
+            return result.toPrettyString();
         }
     }
+
 }
